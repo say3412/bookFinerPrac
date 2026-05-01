@@ -1,0 +1,6 @@
+body {
+  display: grid;
+  grid-template-rows: 1fr auto; /* 콘텐츠는 꽉 채우고 푸터는 자기 크기만큼 */
+  min-height: 100vh;
+  margin: 0;
+}

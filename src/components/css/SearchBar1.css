@@ -1,0 +1,47 @@
+.search-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 18px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.search-bar input {
+  height: 45px;
+  flex: 1; /* 전체 width에서 비율로 할당*/
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 5px;
+  padding: 12px;
+  outline: none;
+}
+
+.search-bar input:focus {
+  box-shadow: 0px 0px 5px rgba(249, 208, 2, 0.102); /* 포커스 시 약간의 그림자 효과 */
+}
+
+.search-bar button {
+  height: 45px;
+  width: 50x;
+  font-size: 25px;
+  border: none;
+  /* background-color: #fafa11; */
+  background-color: white;
+  color: rgb(103, 100, 100);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.select-bar {
+  height: 45px;
+  border: 0;
+  min-width: 60px;
+  padding: 5px;
+}

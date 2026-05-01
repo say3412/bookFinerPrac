@@ -1,0 +1,14 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.pagination button {
+  padding: 5px 10px;
+}
+
+.pagination span {
+  margin: 0 20px;
+}
