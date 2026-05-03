@@ -1,28 +1,13 @@
-import { useContext } from "react";
-import type { Book } from "../types/Book";
-import BookContext from "../contexts/BookContext";
-
-interface ItemProps {
-  book: Book;
-}
-
-export default function BookItem({book}: ItemProps) {
-  const context = useContext(BookContext);
-  if (!context) {
-    throw new Error("BookContext Provider가 없습니다");
-  }
-
-  const {selectBook} = context;
-
+export default function BookItem() {
   return (
-    <div className="book-item" onClick={() => selectBook(book)}>
+    <div className="book-item">
       <img
-        src={book.thumbnail}
-        alt={book.title}
+        src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791187142560.jpg"
+        alt="책 제목"
       />
       <div className="book-info">
-        <h3>{book.title}</h3>
-        <p>{book.authors.join(', ')} | {book.publisher}</p>
+        <h3>title</h3>
+        <p>authors | publisher</p>
       </div>
     </div>
   );
