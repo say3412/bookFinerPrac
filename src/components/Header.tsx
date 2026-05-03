@@ -1,14 +1,15 @@
 import "./css/Header1.css";
-import type { Book } from "../types/Book";
+import useBookContext from "../hooks/useBookContext";
 
-interface HeaderProps {
-  books: Book[];
-}
+export default function Header() {
+  const {books} = useBookContext();
 
-export default function Header({ books }: HeaderProps) {
+  if (!books) {
+    throw new Error('No BookContext Provider.');
+  }
   return (
     <>
-      {!books || books.length === 0 && (
+      {books.length === 0 && (
         <header className="Header">
           <h1>🍓 Berry Book Club 📚</h1>
           <p>every books you want!</p>

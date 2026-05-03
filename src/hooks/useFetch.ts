@@ -1,10 +1,15 @@
 import type { Book, Meta } from "../types/Book";
 import { useEffect, useState } from "react";
-import config from "../config.json";
+import usePagination from "./usePagination";
 
-export default function useFetch<T>(query: string, pageNum:number, endPoint:string) {
+export default function useFetch(
+  query: string,
+  pageNum: number,
+  endPoint: string,
+  apiKey: string,
+) {
   const [documents, setDocuments] = useState<Book[]>([]);
-  const [endPage, setEngPage] = useState<boolean>(false);
+  const pagination = usePagination();
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -12,7 +17,7 @@ export default function useFetch<T>(query: string, pageNum:number, endPoint:stri
         const url = `${endPoint}page=${pageNum}&query=${query}`;
         const res = await fetch(url, {
           headers: {
-            Authorization: config.KAKAOAPIKEY,
+            Authorization: apiKey,
           },
         });
 
@@ -21,17 +26,16 @@ export default function useFetch<T>(query: string, pageNum:number, endPoint:stri
         }
 
         const metaData: Meta = await res.json();
-        const books: Book[] = metaData.documents;
 
-        setDocuments(books);
-        setEngPage(metaData.meta.is_end);
+        setDocuments(metaData.documents);
+        pagination.setIsEndPage(metaData.meta.is_end);
       } catch (e) {
         alert(e);
       }
     };
 
     fetchBooks();
-  }, [query]);
+  }, [query, pageNum]);
 
-  return {documents, endPage}
+  return { documents };
 }

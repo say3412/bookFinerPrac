@@ -1,18 +1,15 @@
 import "./css/BookDetail1.css";
-import type { Book } from "../types/Book";
+import useBookContext from "../hooks/useBookContext";
 
-interface DetailProps {
- book: Book | null;
-}
-export default function BookDetail({book}: DetailProps) {
+export default function BookDetail() {
+  const { selectedBook: book } = useBookContext();
+
   if (!book) {
-    return (
-      <div className="no-book"></div>
-    )
+    return <div className="no-book"></div>;
   }
-  
+
   return (
-        <div className="book-detail">
+    <div className="book-detail">
       <h2>{book.title}</h2>
       <div className="header">
         <div className="header-img">
@@ -48,7 +45,8 @@ export default function BookDetail({book}: DetailProps) {
       </div>
       <p>
         <strong>내용: </strong>
-        <br /><br />
+        <br />
+        <br />
         {book.contents}
       </p>
     </div>

@@ -6,43 +6,36 @@ import type { Book } from "../types/Book";
 import { useState } from "react";
 import BookContext from "../contexts/BookContext";
 import useFetch from "../hooks/useFetch";
+import config from "../config.json"
+import useSearch from "../hooks/useSearch";
+import usePagination from "../hooks/usePagination";
+import SearchContext from "../contexts/searchContext";
+import PaginationContext from "../contexts/PaginationContext";
 
 export default function BookFinderPrac() {
-  const [query, setQuery] = useState<string>("");
-  const [pageNum, setPageNum] = useState<number>(1);
-  const endPoint = "https://dapi.kakao.com/v3/search/book?";
-  
-  const {documents, endPage} = useFetch(query, pageNum, endPoint);
-  const [selected, setSelected] = useState<Book | null>(null);
+  const endPoint = config.BOOK_SEARCH;
+  const apiKey = config.KAKAOAPIKEY;
 
+  const search = useSearch();
+  const pagination = usePagination();
+  
+  const {documents} = useFetch(search.query, pagination.pageNum, endPoint, apiKey);
+  const [selectedBook, setSelected] = useState<Book | null>(null);
+  
   const selectBook = (book: Book) => {
     setSelected(book);
   };
 
-  const chageQuery = (q: string) => {
-    setQuery(q);
-  };
-
-  const nextPageNum = () => {
-    setPageNum((prev) => prev + 1);
-  };
-
-  const prevPageNum = () => {
-    setPageNum((prev) => prev - 1);
-  };
-
-  const resetPage = () => {
-    setPageNum(1);
-  };
-
   return (
     <div className="">
-      <Header books={documents}/>
-      <BookContext.Provider value={{ selectBook }}>
-        <div className="">
-          <SearchArea chageQuery={chageQuery} resetPage={resetPage} books={documents}/>
-          <BookArea books={documents} book={selected} pageNum={pageNum} endPage={endPage} nextPageNum={nextPageNum} prevPageNum={prevPageNum}/>
-        </div>
+      <BookContext.Provider value={{ books: documents, selectedBook, selectBook }}>
+        <SearchContext.Provider value={search}>
+        <Header />
+        <PaginationContext.Provider value={pagination}>
+          <SearchArea />
+          <BookArea />
+        </PaginationContext.Provider>
+        </SearchContext.Provider>
       </BookContext.Provider>
       {/* <Footer /> */}
     </div>
