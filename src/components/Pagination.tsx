@@ -1,28 +1,18 @@
-import './css/Pagination1.css'
+import "./css/Pagination1.css";
+import usePaginationContext from "../hooks/usePaginationContext";
 
-interface PageProps {
-  pageNum: number;
-  endPage: boolean;
-  prevPageNum: () => void;
-  nextPageNum: () => void;
-}
-
-export default function Pagination({ pageNum, endPage, prevPageNum, nextPageNum }: PageProps) {
-  const handerPrev = () => {
-    if(pageNum === 1) return;
-    prevPageNum();
-  };
-
-  const handerNext = () => {
-    if(endPage) return;
-    nextPageNum();
-  };
-
+export default function Pagination() {
+  const { pageNum, endPage, prevPage, nextPage } = usePaginationContext();
+  
   return (
     <div>
-      <button onClick={handerPrev} disabled={pageNum === 1}>prev</button>
+      <button onClick={prevPage} disabled={pageNum === 1}>
+        prev
+      </button>
       <span>{pageNum}</span>
-      <button onClick={handerNext} disabled={endPage}>next</button>
+      <button onClick={nextPage} disabled={endPage}>
+        next
+      </button>
     </div>
   );
 }

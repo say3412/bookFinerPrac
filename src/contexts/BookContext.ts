@@ -1,8 +1,12 @@
 import { createContext } from "react";
 import type { Book } from "../types/Book";
 
-type BookContextType = {
-  selectBook: (book: Book) => void;
+export type BookContextType = {
+  books: Book[];
+  selectedbook: Book | null;
+  selectBook: (book: Book | null) => void;
+  isLoading: boolean;
+  error: string | null;
 }
 
 const BookContext = createContext<BookContextType | null>(null);

@@ -1,10 +1,9 @@
 import "./css/BookDetail1.css";
-import type { Book } from "../types/Book";
+import useBookContext from "../hooks/useBookContext";
 
-interface DetailProps {
- book: Book | null;
-}
-export default function BookDetail({book}: DetailProps) {
+export default function BookDetail() {
+  const {selectedbook: book} = useBookContext();
+
   if (!book) {
     return (
       <div className="no-book"></div>

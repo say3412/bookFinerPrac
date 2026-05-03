@@ -3,48 +3,44 @@ import Footer from "./Footer";
 import SearchArea from "./SearchArea";
 import BookArea from "./BookArea";
 import type { Book } from "../types/Book";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookContext from "../contexts/BookContext";
 import useFetch from "../hooks/useFetch";
+import config from "../config.json";
+import { PaginationContext } from "../contexts/PaginationContext";
+import SearchContext from "../contexts/SearchContext";
+import useSearch from "../hooks/useSearch";
+import usePagination from "../hooks/usePagination";
 
 export default function BookFinderPrac() {
-  const [query, setQuery] = useState<string>("");
-  const [pageNum, setPageNum] = useState<number>(1);
-  const endPoint = "https://dapi.kakao.com/v3/search/book?";
+  const search = useSearch();
+  const page = usePagination();
+  const endPoint = config.BOOK_SEARCH;
+  const {documents, endPage, isLoading, error} = useFetch(search.query, page.pageNum, endPoint);
   
-  const {documents, endPage} = useFetch(query, pageNum, endPoint);
-  const [selected, setSelected] = useState<Book | null>(null);
+  const [selectedbook, setSelected] = useState<Book | null>(null);
 
-  const selectBook = (book: Book) => {
+  const selectBook = (book: Book | null) => {
     setSelected(book);
   };
 
-  const chageQuery = (q: string) => {
-    setQuery(q);
-  };
+  useEffect(() => {
+    page.setEndPage(endPage);
+  }, [endPage])
 
-  const nextPageNum = () => {
-    setPageNum((prev) => prev + 1);
-  };
-
-  const prevPageNum = () => {
-    setPageNum((prev) => prev - 1);
-  };
-
-  const resetPage = () => {
-    setPageNum(1);
-  };
 
   return (
-    <div className="">
+    <SearchContext.Provider value={search}>
+      <BookContext.Provider value={{ books: documents, selectedbook, selectBook, isLoading, error }}>
+        <PaginationContext.Provider value={page}>
       <Header books={documents}/>
-      <BookContext.Provider value={{ selectBook }}>
-        <div className="">
-          <SearchArea chageQuery={chageQuery} resetPage={resetPage} books={documents}/>
-          <BookArea books={documents} book={selected} pageNum={pageNum} endPage={endPage} nextPageNum={nextPageNum} prevPageNum={prevPageNum}/>
-        </div>
+      <div>
+          <SearchArea />
+          <BookArea />
+          </div>
+        </PaginationContext.Provider>
       </BookContext.Provider>
       {/* <Footer /> */}
-    </div>
+    </SearchContext.Provider>
   );
 }

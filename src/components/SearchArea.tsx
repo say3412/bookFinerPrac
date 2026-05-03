@@ -1,18 +1,25 @@
-import type { Book } from "../types/Book";
+import useBookContext from "../hooks/useBookContext";
+import useSearchContext from "../hooks/useSearchContext";
 import "./css/SearchArea1.css";
 import SearchBar from "./SearchBar";
 
-interface SearchProp {
-  resetPage: () => void;
-  chageQuery: (q: string) => void;
-  books: Book[];
-}
+export default function SearchArea() {
+  const {books, selectBook} = useBookContext();
+  const {changeQuery} = useSearchContext();
 
-export default function SearchArea({resetPage, chageQuery, books}: SearchProp) {
+  const resetToIntro = () => {
+    changeQuery("");
+    selectBook(null);
+  };
+
   return (
     <div className="search-area">
-      {books && books.length > 0 && <div className="left-top">🍓 Berry Book Club 📚</div>}
-      <SearchBar resetPage={resetPage} chageQuery={chageQuery}/>
+      {books && books.length > 0 && (
+        <div className="left-top" onClick={resetToIntro}>
+          🍓 Berry Book Club 📚
+        </div>
+      )}
+      <SearchBar />
       <div className="right-top"></div>
     </div>
   );
