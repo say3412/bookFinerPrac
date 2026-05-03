@@ -33,7 +33,7 @@ export default function BookDetail() {
             </span>
             <br />
             <span>
-              <strong>가격:</strong>&nbsp; {book.price}
+              <strong>가격:</strong>&nbsp; <strong>{book.sale_price}</strong>&nbsp; (정가: {book.price})
             </span>
             <span className="click-details">
               <a href={book.url} target="_blank">

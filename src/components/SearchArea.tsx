@@ -1,25 +1,19 @@
-import { useContext } from "react";
-import type { Book } from "../types/Book";
 import "./css/SearchArea1.css";
 import SearchBar from "./SearchBar";
-import BookContext from "../contexts/BookContext";
-import usePaginationContext from "../hooks/usePaginationContext";
-import useSearchContext from "../hooks/useSearchContext";
 import useBookContext from "../hooks/useBookContext";
 
-interface SearchProp {
-  resetPage: () => void;
-  chageQuery: (q: string) => void;
-  books: Book[];
-}
-
 export default function SearchArea() {
-  const { books } = useBookContext();
+  const { books, setBooks, selectBook } = useBookContext();
+
+  const clearPage = () => {
+    setBooks([]);
+    selectBook(null); 
+  }
 
   return (
     <div className="search-area">
       {books.length > 0 && (
-        <div className="left-top">🍓 Berry Book Club 📚</div>
+        <div className="left-top" onClick={() => clearPage()}>🍓 Berry Book Club 📚</div>
       )}
       <SearchBar />
       <div className="right-top"></div>

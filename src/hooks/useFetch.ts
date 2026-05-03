@@ -37,5 +37,5 @@ export default function useFetch(
     fetchBooks();
   }, [query, pageNum]);
 
-  return { documents };
+  return { documents, setDocuments };
 }

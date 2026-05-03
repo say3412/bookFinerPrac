@@ -18,12 +18,19 @@ export default function SearchBar() {
     pagination.resetPage();
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.code === "Enter") {
+      handelClick();
+    }
+  };
+
   return (
     <div className="search-bar">
       <input
         type="text"
-        placeholder="what is in your mind?"
+        placeholder="which book is in your mind?"
         onChange={handelChageQuery}
+        onKeyDown={handleKeyDown}
         value={inputCon}
       />
       <button onClick={handelClick}>🔍</button>
