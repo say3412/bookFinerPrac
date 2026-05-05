@@ -1,0 +1,11 @@
+import { createContext } from "react";
+
+export type SearchContextType = {
+  query: string;
+  setQuery: (q: string) => void;
+};
+
+const SearchContext = createContext<SearchContextType | null>(null);
+SearchContext.displayName = "SearchContext";
+
+export default SearchContext;

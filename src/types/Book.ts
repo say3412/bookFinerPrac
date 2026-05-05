@@ -12,9 +12,16 @@ export type Book = {
   url: string;
 };
 
-export type Meta = {
+export type Web = {
+  title: String;
+  contents: String;
+  url: String;
+  datetime: String;
+};
+
+export type Meta<T> = {
   meta: {
     is_end: boolean;
   };
-  documents: Book[];
+  documents: T[];
 };
