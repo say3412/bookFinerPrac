@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import usePaginationContext from "./usePaginationContext";
 import type { Meta } from "../types/Book";
 
 export default function useFetch<T>(
@@ -14,6 +13,8 @@ export default function useFetch<T>(
   useEffect(() => {
     if (!query) {
       setDocuments([]);
+      setEndPage(false);
+      return;
     }
 
     const fetchDocuments = async () => {
